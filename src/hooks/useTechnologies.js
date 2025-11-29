@@ -32,6 +32,38 @@ const initialTechnologies = [
     status: 'not-started',
     notes: '',
     category: 'frontend'
+  },
+  { 
+    id: 5, 
+    title: 'Node.js Basics', 
+    description: 'Основы серверного JavaScript', 
+    status: 'not-started',
+    notes: '',
+    category: 'backend'
+  },
+  { 
+    id: 6, 
+    title: 'Express.js', 
+    description: 'Создание REST API', 
+    status: 'not-started',
+    notes: '',
+    category: 'backend'
+  },
+  { 
+    id: 7, 
+    title: 'MongoDB', 
+    description: 'Работа с NoSQL базой данных', 
+    status: 'not-started',
+    notes: '',
+    category: 'database'
+  },
+  { 
+    id: 8, 
+    title: 'Git & GitHub', 
+    description: 'Система контроля версий', 
+    status: 'completed',
+    notes: '',
+    category: 'tools'
   }
 ];
 
@@ -60,6 +92,10 @@ function useTechnologies() {
     );
   };
 
+  const deleteTechnology = (techId) => {
+    setTechnologies(prev => prev.filter(tech => tech.id !== techId));
+  };
+
   const calculateProgress = () => {
     if (technologies.length === 0) return 0;
     const completed = technologies.filter(tech => tech.status === 'completed').length;
@@ -72,6 +108,7 @@ function useTechnologies() {
     updateStatus,
     updateNotes,
     updateAllStatuses,
+    deleteTechnology,
     progress: calculateProgress()
   };
 }
