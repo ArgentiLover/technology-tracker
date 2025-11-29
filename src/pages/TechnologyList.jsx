@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import useTechnologies from '../hooks/useTechnologies';
 import './TechnologyList.css';
+import LanguagesImporter from '../components/LanguagesImporter';
 
 function TechnologyList() {
     const { technologies, deleteTechnology } = useTechnologies();
@@ -59,7 +60,10 @@ function TechnologyList() {
                     </Link>
                 </div>
             )}
+
+        <LanguagesImporter />
         </div>
+        
     );
 }
 
