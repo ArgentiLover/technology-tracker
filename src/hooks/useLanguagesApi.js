@@ -13,8 +13,7 @@ function useLanguagesApi() {
       return 'https://api.allorigins.win/raw?url=https://onecompiler.com/api/v1/languages';
     } else {
       // В продакшене используем наш Vercel function
-      // ЗАМЕНИ НА СВОЙ VERCEL URL ПОСЛЕ ДЕПЛОЯ
-      return 'https://your-app.vercel.app/api/languages';
+      return 'https://technology-tracker-lpjeogrhy-danils-projects-e42892b9.vercel.app/api/languages';
     }
   };
 
