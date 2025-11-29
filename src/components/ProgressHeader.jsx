@@ -1,12 +1,14 @@
 import './ProgressHeader.css';
 
-function ProgressHeader({ technologies }) {
+function ProgressHeader({ technologies, progress }) {
     // Рассчитываем расширенную статистику
     const total = technologies.length;
     const completed = technologies.filter(tech => tech.status === 'completed').length;
     const inProgress = technologies.filter(tech => tech.status === 'in-progress').length;
     const notStarted = technologies.filter(tech => tech.status === 'not-started').length;
-    const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+    
+    // Используем переданный progress из хука вместо расчета
+    const percentage = progress;
 
     // Функции для расчета ширины визуальных индикаторов
     const getVisualWidth = (count) => {
