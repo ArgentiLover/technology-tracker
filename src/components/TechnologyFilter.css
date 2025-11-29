@@ -1,51 +1,48 @@
-.technology-filter {
-    background: white;
+.technology-card {
+    border: 2px solid #eee;
     border-radius: 10px;
     padding: 20px;
-    margin-bottom: 20px;
+    margin: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.technology-filter h3 {
-    margin: 0 0 15px 0;
-    color: #333;
-    text-align: center;
-}
-
-.filter-buttons {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.filter-btn {
-    padding: 8px 16px;
-    border: 2px solid #667eea;
-    border-radius: 20px;
-    background: white;
-    color: #667eea;
-    cursor: pointer;
-    font-size: 0.85em;
     transition: all 0.3s ease;
-    font-weight: 500;
 }
 
-.filter-btn:hover {
-    background: #667eea;
-    color: white;
-    transform: translateY(-1px);
+.card-content {
+    cursor: pointer;
 }
 
-.filter-btn.active {
-    background: #667eea;
-    color: white;
-    box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+.technology-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.technologies-count {
-    text-align: center;
-    margin: 15px 0;
+.status-not-started {
+    border-left: 4px solid #ff6b6b;
+    background-color: #ffebee;
+}
+
+.status-in-progress {
+    border-left: 4px solid #4ecdc4;
+    background-color: #e0f2f1;
+}
+
+.status-completed {
+    border-left: 4px solid #45b7d1;
+    background-color: #e8f5e9;
+}
+
+.technology-card h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.technology-card p {
+    margin: 0 0 10px 0;
     color: #666;
-    font-style: italic;
+}
+
+.technology-card span {
+    font-size: 0.9em;
+    color: #888;
+    font-weight: bold;
 }

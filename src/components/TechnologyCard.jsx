@@ -1,30 +1,33 @@
 import './TechnologyCard.css';
+import TechnologyNotes from './TechnologyNotes';
 
-function TechnologyCard({ id, title, description, status, onStatusChange }) {
-    const handleClick = () => {
-        // Определяем следующий статус в цикле
+function TechnologyCard({ id, title, description, status, notes, onStatusChange, onNotesChange }) {
+    const handleCardClick = () => {
         const statusOrder = ['not-started', 'in-progress', 'completed'];
         const currentIndex = statusOrder.indexOf(status);
         const nextIndex = (currentIndex + 1) % statusOrder.length;
         const nextStatus = statusOrder[nextIndex];
         
-        // Вызываем функцию из props для обновления статуса
         onStatusChange(id, nextStatus);
     };
 
     return (
-        <div 
-            className={`technology-card status-${status}`}
-            onClick={handleClick}
-        >
-            <h3>{title}</h3>
-            <p>{description}</p>
-            <span>Статус: {getStatusText(status)}</span>
+        <div className={`technology-card status-${status}`}>
+            <div className="card-content" onClick={handleCardClick}>
+                <h3>{title}</h3>
+                <p>{description}</p>
+                <span>Статус: {getStatusText(status)}</span>
+            </div>
+            
+            <TechnologyNotes 
+                notes={notes}
+                onNotesChange={onNotesChange}
+                techId={id}
+            />
         </div>
     );
 }
 
-// Вспомогательная функция для отображения статуса
 function getStatusText(status) {
     const statusMap = {
         'not-started': 'Не начато',
