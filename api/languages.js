@@ -1,30 +1,41 @@
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', 'https://argentilover.github.io');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS, POST');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  const allowedOrigins = [
+    'https://argentilover.github.io'
+  ];
+
+  const origin = req.headers.origin;
   
-  // Для preflight запроса
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   try {
-    console.log('Fetching languages from OneCompiler...');
     const response = await fetch('https://onecompiler.com/api/v1/languages');
-    
+
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`API error: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log(`Successfully fetched ${data.length} languages`);
     
-    res.status(200).json(data);
+    res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate');
+    
+    return res.status(200).json(data);
+    
   } catch (error) {
-    console.error('Proxy error:', error);
-    res.status(500).json({ 
-      error: 'Failed to fetch languages',
-      message: error.message 
+    return res.status(500).json({ 
+      error: 'Failed to fetch programming languages'
     });
   }
 }

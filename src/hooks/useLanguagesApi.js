@@ -6,37 +6,24 @@ function useLanguagesApi() {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Определяем URL API в зависимости от окружения
-  const getApiUrl = () => {
-    if (import.meta.env.DEV) {
-      // В разработке используем CORS прокси
-      return 'https://api.allorigins.win/raw?url=https://onecompiler.com/api/v1/languages';
-    } else {
-      // В продакшене используем наш Vercel function
-      return 'https://technology-tracker-lpjeogrhy-danils-projects-e42892b9.vercel.app/api/languages';
-    }
-  };
+  const API_URL = 'https://technology-tracker-lpjeogrhy-danils-projects-e42892b9.vercel.app/api/languages';
 
   const fetchLanguages = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
-
-      const apiUrl = getApiUrl();
-      console.log('Fetching from:', apiUrl);
       
-      const response = await fetch(apiUrl);
+      const response = await fetch(API_URL);
       
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error('API error');
       }
 
       const data = await response.json();
       setLanguages(data);
 
     } catch (err) {
-      setError(`Ошибка загрузки: ${err.message}`);
-      console.error('Ошибка загрузки языков:', err);
+      setError('Failed to load languages');
     } finally {
       setLoading(false);
     }
