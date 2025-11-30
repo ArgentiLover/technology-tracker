@@ -46,6 +46,22 @@
 
 .tech-deadline {
     margin-top: 8px;
-    font-size: 0.9em;
-    color: #b33;
+    font-size: 0.85em;
+    color: #6b7280; /* muted gray */
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.tech-deadline.muted {
+    color: #6b7280; /* neutral-muted */
+    opacity: 0.9;
+}
+.tech-deadline.urgent {
+    color: #b45309; /* amber-700 */
+    font-weight: 600;
+}
+.tech-deadline.overdue {
+    color: #b91c1c; /* red-700 */
+    font-weight: 700;
 }

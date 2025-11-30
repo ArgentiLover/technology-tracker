@@ -96,6 +96,10 @@ function useTechnologies() {
     setTechnologies(prev => prev.filter(tech => tech.id !== techId));
   };
 
+  const updateDeadline = (techId, deadline) => {
+    setTechnologies(prev => prev.map(tech => tech.id === techId ? { ...tech, deadline } : tech));
+  };
+
   const calculateProgress = () => {
     if (technologies.length === 0) return 0;
     const completed = technologies.filter(tech => tech.status === 'completed').length;
@@ -109,6 +113,7 @@ function useTechnologies() {
     updateNotes,
     updateAllStatuses,
     deleteTechnology,
+    updateDeadline,
     progress: calculateProgress()
   };
 }

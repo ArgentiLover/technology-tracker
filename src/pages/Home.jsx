@@ -1,11 +1,9 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import TechnologyCard from '../components/TechnologyCard.jsx';
 import ProgressHeader from '../components/ProgressHeader.jsx';
 import QuickActions from '../components/QuickActions.jsx';
 import TechnologyFilter from '../components/TechnologyFilter.jsx';
-import LanguagesImporter from '../components/LanguagesImporter.jsx';
-import DeadlineForm from '../components/DeadlineForm.jsx';
 import useTechnologies from '../hooks/useTechnologies';
 import '../components/TechnologyCard.css';
 import '../components/ProgressHeader.css';
@@ -19,8 +17,7 @@ function Home() {
     updateStatus, 
     updateNotes, 
     updateAllStatuses, 
-    progress,
-    setTechnologies 
+    progress 
   } = useTechnologies();
 
   const [activeFilter, setActiveFilter] = useState('all');
@@ -50,16 +47,6 @@ function Home() {
     updateNotes(techId, newNotes);
   };
 
-  const handleUpdateDeadlines = (deadlineUpdates) => {
-    const updatedTechs = technologies.map(tech => {
-      const update = deadlineUpdates.find(u => u.techId === tech.id);
-      return update ? { ...tech, deadline: update.deadline } : tech;
-    });
-    
-    setTechnologies(updatedTechs);
-    alert(`Дедлайны обновлены для ${deadlineUpdates.length} технологий`);
-  };
-
   const filteredTechnologies = technologies.filter(tech => {
     if (activeFilter === 'all') return true;
     return tech.status === activeFilter;
@@ -80,13 +67,6 @@ function Home() {
         onUpdateAllStatuses={handleUpdateAllStatuses}
         onRandomSelect={handleRandomSelect}
       />
-
-      <DeadlineForm 
-        technologies={technologies}
-        onUpdateDeadlines={handleUpdateDeadlines}
-      />
-
-      <LanguagesImporter />
       
       <div className="search-box">
         <input
