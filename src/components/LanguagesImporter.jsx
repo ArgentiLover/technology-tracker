@@ -164,7 +164,7 @@ function LanguagesImporter() {
         </button>
         <button 
           onClick={() => handleAddMultiple(filteredLanguages.filter(lang => 
-            ['javascript', 'python', 'java', 'typescript', 'go'].includes(lang.id)
+            ['javascript', 'python', 'java', 'typescript', 'c++'].includes(lang.id)
           ))}
           className="bulk-btn popular"
         >

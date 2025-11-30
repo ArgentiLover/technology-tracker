@@ -3,11 +3,15 @@ import Modal from './Modal';
 import ProgressBar from './ProgressBar';
 import './QuickActions.css';
 import MassStatusEditor from './MassStatusEditor';
+import useTechnologies from '../hooks/useTechnologies';
+import validateTechnologies from '../utils/validateTechnologies';
 
 function QuickActions({ technologies, onUpdateAllStatuses, onRandomSelect }) {
     const [showExportModal, setShowExportModal] = useState(false);
     const [showImportModal, setShowImportModal] = useState(false);
     const [importData, setImportData] = useState('');
+
+    const { setTechnologies } = useTechnologies();
 
     const markAllCompleted = () => {
         onUpdateAllStatuses('completed');
@@ -45,15 +49,57 @@ function QuickActions({ technologies, onUpdateAllStatuses, onRandomSelect }) {
     const handleImport = () => {
         try {
             const data = JSON.parse(importData);
-            if (data.technologies && Array.isArray(data.technologies)) {
-                localStorage.setItem('techTrackerData', JSON.stringify(data.technologies));
-                window.location.reload();
-            } else {
-                alert('Неверный формат данных');
+            // support both full export objects and raw arrays
+            const arr = data && Array.isArray(data.technologies) ? data.technologies : (Array.isArray(data) ? data : null);
+            if (!arr) {
+                alert('Неверный формат данных: ожидается массив technologies');
+                return;
             }
+
+            const result = validateTechnologies(arr);
+            if (!result.valid) {
+                alert('Ошибка при импорте данных:\n' + result.errors.join('\n'));
+                return;
+            }
+
+            // apply via hook so UI updates immediately
+            setTechnologies(arr);
+            setShowImportModal(false);
         } catch (error) {
             alert('Ошибка при импорте данных: ' + error.message);
         }
+    };
+
+    const handleFileImport = (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            try {
+                const text = reader.result;
+                const data = JSON.parse(text);
+                const arr = data && Array.isArray(data.technologies) ? data.technologies : (Array.isArray(data) ? data : null);
+                if (!arr) {
+                    alert('Неверный формат файла: ожидается массив technologies');
+                    return;
+                }
+
+                const result = validateTechnologies(arr);
+                if (!result.valid) {
+                    alert('Ошибка при импорте файла:\n' + result.errors.join('\n'));
+                    return;
+                }
+
+                setTechnologies(arr);
+                setShowImportModal(false);
+            } catch (err) {
+                alert('Ошибка при чтении файла: ' + (err && err.message ? err.message : String(err)));
+            }
+        };
+        reader.readAsText(file);
+        // clear the input so user can re-upload same file if needed
+        e.target.value = null;
     };
 
     const completed = technologies.filter(tech => tech.status === 'completed').length;
@@ -136,10 +182,10 @@ function QuickActions({ technologies, onUpdateAllStatuses, onRandomSelect }) {
                             showPercentage={true}
                         />
                         <div className="stats-details">
-                            <span>Всего: {total}</span>
-                            <span>Завершено: {completed}</span>
+                            <span>Всего: {total} </span>
+                            <span>Завершено: {completed} </span>
                             <span>В процессе: {technologies.filter(tech => tech.status === 'in-progress').length}</span>
-                            <span>Не начато: {technologies.filter(tech => tech.status === 'not-started').length}</span>
+                            <span> Не начато: {technologies.filter(tech => tech.status === 'not-started').length}</span>
                         </div>
                     </div>
                     <button 
@@ -157,7 +203,14 @@ function QuickActions({ technologies, onUpdateAllStatuses, onRandomSelect }) {
                 title="Импорт данных"
             >
                 <div className="modal-import">
-                    <p>Вставьте данные JSON для импорта:</p>
+                    <p>Загрузите JSON-файл экспорта или вставьте JSON для импорта:</p>
+                    <input
+                        type="file"
+                        accept="application/json"
+                        onChange={handleFileImport}
+                        className="import-file-input"
+                        aria-label="Загрузить JSON файл с технологиями"
+                    />
                     <textarea
                         value={importData}
                         onChange={(e) => setImportData(e.target.value)}

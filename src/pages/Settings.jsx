@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import useTechnologies from '../hooks/useTechnologies';
 import Modal from '../components/Modal';
 import './Settings.css';
+import validateTechnologies from '../utils/validateTechnologies';
 
 function Settings() {
     const { technologies, setTechnologies } = useTechnologies();
@@ -41,6 +42,11 @@ function Settings() {
             try {
                 const data = JSON.parse(ev.target.result);
                 if (data.technologies && Array.isArray(data.technologies)) {
+                    const { valid, errors } = validateTechnologies(data.technologies);
+                    if (!valid) {
+                        alert('Ошибки в импортируемых данных:\n' + errors.slice(0,10).join('\n'));
+                        return;
+                    }
                     setTechnologies(data.technologies);
                     alert('Данные успешно импортированы!');
                     setSelectedFile(null);
@@ -56,6 +62,8 @@ function Settings() {
         };
         reader.readAsText(selectedFile);
     };
+
+    // validator is imported from utils/validateTechnologies
 
     const handleResetAll = () => {
         const resetTechnologies = technologies.map(tech => ({
