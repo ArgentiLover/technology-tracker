@@ -1,10 +1,22 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import useTechnologies from '../hooks/useTechnologies';
 import './TechnologyList.css';
+import '../components/LanguagesImporter.css';
 import LanguagesImporter from '../components/LanguagesImporter';
 
 function TechnologyList() {
     const { technologies, deleteTechnology } = useTechnologies();
+    const [toasts, setToasts] = useState([]);
+
+    const addToast = (text, type = 'info', timeout = 4000, actions = null) => {
+        const id = Date.now() + Math.random();
+        setToasts(t => [...t, { id, text, type, actions }]);
+        if (timeout > 0) setTimeout(() => setToasts(t => t.filter(x => x.id !== id)), timeout);
+        return id;
+    };
+
+    const removeToast = (id) => setToasts(t => t.filter(x => x.id !== id));
 
     const getStatusText = (status) => {
         switch(status) {
@@ -39,9 +51,10 @@ function TechnologyList() {
                                 <button
                                     className="btn-delete"
                                     onClick={() => {
-                                        if (window.confirm('Вы уверены, что хотите удалить эту технологию?')) {
-                                            deleteTechnology(tech.id);
-                                        }
+                                        const id = addToast(`Удалить "${tech.title}"?`, 'info', 0, [
+                                            { label: 'Удалить', handler: () => { deleteTechnology(tech.id); removeToast(id); addToast('Технология удалена', 'success'); } },
+                                            { label: 'Отмена', handler: () => removeToast(id) }
+                                        ]);
                                     }}
                                 >
                                     Удалить
@@ -62,6 +75,18 @@ function TechnologyList() {
             )}
 
         <LanguagesImporter />
+        <div className="toasts">
+            {toasts.map(t => (
+                <div key={t.id} className={`toast ${t.type}`}>
+                    <div className="toast-text">{t.text}</div>
+                    <div style={{display: 'flex', gap: 8}}>
+                        {t.actions ? t.actions.map((a, i) => (
+                            <button key={i} onClick={() => { try { a.handler(); } catch (e) { console.error(e); } }} className="toast-action">{a.label}</button>
+                        )) : <button onClick={() => removeToast(t.id)}>×</button>}
+                    </div>
+                </div>
+            ))}
+        </div>
         </div>
         
     );
