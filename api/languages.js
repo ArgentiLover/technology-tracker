@@ -1,13 +1,15 @@
 export default async function handler(req, res) {
   const allowedOrigins = [
-    'https://argentilover.github.io'
-  ];
+  'https://argentilover.github.io',
+  'https://technology-tracker.vercel.app',
+  'https://vercel.com/danils-projects-e42892b9/technology-tracker',
+  'https://technology-tracker-6ovqpe1ud-danils-projects-e42892b9.vercel.app'
+];
 
-  const origin = req.headers.origin;
-  
-  if (origin && allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
+const origin = req.headers.origin;
+if (allowedOrigins.includes(origin)) {
+  res.setHeader('Access-Control-Allow-Origin', origin);
+}
 
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
