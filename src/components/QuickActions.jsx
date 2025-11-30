@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Modal from './Modal';
 import ProgressBar from './ProgressBar';
 import './QuickActions.css';
+import MassStatusEditor from './MassStatusEditor';
 
 function QuickActions({ technologies, onUpdateAllStatuses, onRandomSelect }) {
     const [showExportModal, setShowExportModal] = useState(false);
@@ -58,6 +59,7 @@ function QuickActions({ technologies, onUpdateAllStatuses, onRandomSelect }) {
     const completed = technologies.filter(tech => tech.status === 'completed').length;
     const total = technologies.length;
     const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
+    const [showMassEditor, setShowMassEditor] = useState(false);
 
     return (
         <div className="quick-actions">
@@ -97,6 +99,23 @@ function QuickActions({ technologies, onUpdateAllStatuses, onRandomSelect }) {
                 >
                     Импорт
                 </button>
+            </div>
+
+            <div className="mass-editor-section">
+                <button
+                    className="btn-outline"
+                    aria-expanded={showMassEditor}
+                    aria-controls="mass-status-editor"
+                    onClick={() => setShowMassEditor(s => !s)}
+                >
+                    {showMassEditor ? 'Свернуть массовый редактор' : 'Развернуть массовый редактор'}
+                </button>
+
+                {showMassEditor && (
+                    <div id="mass-status-editor">
+                        <MassStatusEditor />
+                    </div>
+                )}
             </div>
 
             <Modal

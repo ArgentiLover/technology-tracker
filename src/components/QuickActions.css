@@ -83,3 +83,38 @@
     background: linear-gradient(135deg, #ffa726, #ff9800);
     color: white;
 }
+
+.mass-editor-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.mass-editor-section > .btn-outline {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    cursor: pointer;
+    color: #111827;
+    font-weight: 600;
+}
+
+.mass-editor-section > #mass-status-editor {
+    width: 100%;
+    max-width: 820px;
+    margin-top: 12px;
+}
+
+.mass-status-editor {
+    box-shadow: 0 6px 18px rgba(16,24,40,0.06);
+    border: 1px solid #e6e6e6;
+    padding: 12px;
+    border-radius: 8px;
+    background: #fff;
+}
+
+@media (max-width: 700px) {
+    .mass-editor-section > #mass-status-editor { max-width: 100%; }
+}

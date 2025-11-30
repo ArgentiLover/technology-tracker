@@ -1,0 +1,30 @@
+.mass-status-editor {
+  border: 1px solid #e6e6e6;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff;
+  margin-top: 12px;
+}
+
+.mass-status-editor fieldset { border: none; padding: 0; margin: 0; }
+
+.mse-controls { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+.mse-actions { display: flex; gap: 8px; }
+.mse-status { display: flex; flex-direction: column; gap: 6px; }
+.mse-submit { margin-left: auto; }
+
+.mse-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; max-height: 220px; overflow: auto; padding: 6px; border-top: 1px dashed #eee; margin-top: 10px; }
+.mse-item { display: flex; align-items: center; gap: 8px; padding: 6px; border-radius: 6px; cursor: pointer; }
+.mse-item:hover { background: #fafafa; }
+.mse-item input { flex: 0 0 auto; }
+.mse-item-title { font-weight: 600; color: #222; }
+.mse-item-meta { margin-left: auto; font-size: 0.85em; color: #666; }
+
+.mse-messages { margin-top: 8px; }
+.mse-error { color: #9b1c1c; background: #fff4f4; padding: 8px; border-radius: 6px; }
+.mse-success { color: #155724; background: #e6ffed; padding: 8px; border-radius: 6px; }
+
+@media (max-width: 600px) {
+  .mse-controls { flex-direction: column; align-items: stretch; }
+  .mse-submit { margin-left: 0; }
+}
