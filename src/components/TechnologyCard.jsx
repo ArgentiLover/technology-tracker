@@ -1,7 +1,7 @@
 import './TechnologyCard.css';
 import TechnologyNotes from './TechnologyNotes';
 
-function TechnologyCard({ id, title, description, status, notes, onStatusChange, onNotesChange }) {
+function TechnologyCard({ id, title, description, status, notes, deadline, onStatusChange, onNotesChange }) {
     const handleCardClick = () => {
         const statusOrder = ['not-started', 'in-progress', 'completed'];
         const currentIndex = statusOrder.indexOf(status);
@@ -17,6 +17,23 @@ function TechnologyCard({ id, title, description, status, notes, onStatusChange,
                 <h3>{title}</h3>
                 <p>{description}</p>
                 <span>Статус: {getStatusText(status)}</span>
+                {deadline && (() => {
+                    try {
+                        const d = new Date(deadline);
+                        if (!isNaN(d.getTime())) {
+                            const today = new Date();
+                            today.setHours(0,0,0,0);
+                            const diff = Math.ceil((d - today) / (1000*60*60*24));
+                            const dateStr = d.toLocaleDateString('ru-RU');
+                            return (
+                                <div className="tech-deadline">Дедлайн: {dateStr} {diff > 0 ? `(через ${diff} дн.)` : diff === 0 ? '(сегодня)' : `(просрочено ${Math.abs(diff)} дн.)`}</div>
+                            );
+                        }
+                    } catch (e) {
+                        // ignore invalid date
+                    }
+                    return null;
+                })()}
             </div>
             
             <TechnologyNotes 

@@ -93,3 +93,9 @@
     color: #666;
     margin-bottom: 15px;
 }
+
+.tech-deadline {
+    margin-top: 8px;
+    font-size: 0.9em;
+    color: #b33;
+}

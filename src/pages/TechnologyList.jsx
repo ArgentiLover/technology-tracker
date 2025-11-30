@@ -40,6 +40,23 @@ function TechnologyList() {
                     <div key={tech.id} className="technology-item">
                         <h3>{tech.title}</h3>
                         <p>{tech.description}</p>
+                        {tech.deadline && (() => {
+                            try {
+                                const d = new Date(tech.deadline);
+                                if (!isNaN(d.getTime())) {
+                                    const today = new Date();
+                                    today.setHours(0,0,0,0);
+                                    const diff = Math.ceil((d - today) / (1000*60*60*24));
+                                    const dateStr = d.toLocaleDateString('ru-RU');
+                                    return (
+                                        <div className="tech-deadline">Дедлайн: {dateStr} {diff > 0 ? `(через ${diff} дн.)` : diff === 0 ? '(сегодня)' : `(просрочено ${Math.abs(diff)} дн.)`}</div>
+                                    );
+                                }
+                            } catch (e) {
+                                // ignore invalid date
+                            }
+                            return null;
+                        })()}
                         <div className="technology-meta">
                             <span className={`status status-${tech.status}`}>
                                 {getStatusText(tech.status)}
