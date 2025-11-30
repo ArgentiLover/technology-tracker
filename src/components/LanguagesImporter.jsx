@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import useLanguagesApi from '../hooks/useLanguagesApi';
+import useTechnologies from '../hooks/useTechnologies';
 import './LanguagesImporter.css';
 
 function LanguagesImporter() {
   const { languages, loading, error, refetch, searchTerm, setSearchTerm } = useLanguagesApi();
   const [selectedCategory, setSelectedCategory] = useState('all');
 
+  const { setTechnologies, technologies: currentTechnologies } = useTechnologies();
+
   const handleAddLanguage = (language) => {
-    const existingTech = JSON.parse(localStorage.getItem('techTrackerData') || '[]');
-    
     const categoryMap = {
       'programming': 'language',
       'database': 'database'
@@ -25,16 +26,19 @@ function LanguagesImporter() {
       apiId: language.id
     };
 
-    const updatedTech = [...existingTech, newTech];
-    localStorage.setItem('techTrackerData', JSON.stringify(updatedTech));
-    
+    setTechnologies(prev => {
+      const exists = prev.some(t => (t.apiId && t.apiId === newTech.apiId) || t.title === newTech.title);
+      if (exists) {
+        alert(`Язык "${language.name}" уже в трекере.`);
+        return prev;
+      }
+      return [...prev, newTech];
+    });
+
     alert(`Язык "${language.name}" добавлен в трекер!`);
-    window.dispatchEvent(new Event('storage'));
   };
 
   const handleAddMultiple = (langList) => {
-    const existingTech = JSON.parse(localStorage.getItem('techTrackerData') || '[]');
-    
     const newTechs = langList.map(language => {
       const categoryMap = {
         'programming': 'language',
@@ -53,11 +57,17 @@ function LanguagesImporter() {
       };
     });
 
-    const updatedTech = [...existingTech, ...newTechs];
-    localStorage.setItem('techTrackerData', JSON.stringify(updatedTech));
-    
+    setTechnologies(prev => {
+      const existingApiIds = new Set(prev.map(t => t.apiId).filter(Boolean));
+      const filteredNew = newTechs.filter(n => !(n.apiId && existingApiIds.has(n.apiId)) && !prev.some(p => p.title === n.title));
+      if (filteredNew.length === 0) {
+        alert('Новых языков для добавления не найдено.');
+        return prev;
+      }
+      return [...prev, ...filteredNew];
+    });
+
     alert(`Добавлено ${langList.length} языков в трекер!`);
-    window.dispatchEvent(new Event('storage'));
   };
 
   const filteredLanguages = selectedCategory === 'all' 
