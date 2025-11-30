@@ -2,21 +2,14 @@ import { useState } from 'react';
 import useLanguagesApi from '../hooks/useLanguagesApi';
 import useTechnologies from '../hooks/useTechnologies';
 import './LanguagesImporter.css';
+import { useNotifications } from '../contexts/NotificationContext';
 
 function LanguagesImporter() {
   const { languages, loading, error, refetch, searchTerm, setSearchTerm } = useLanguagesApi();
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   const { setTechnologies, technologies: currentTechnologies } = useTechnologies();
-  const [toasts, setToasts] = useState([]);
-
-  const addToast = (text, type = 'info', timeout = 4000) => {
-    const id = Date.now() + Math.random();
-    setToasts(t => [...t, { id, text, type }]);
-    if (timeout > 0) setTimeout(() => setToasts(t => t.filter(x => x.id !== id)), timeout);
-  };
-
-  const removeToast = (id) => setToasts(t => t.filter(x => x.id !== id));
+  const { addNotification, removeNotification } = useNotifications();
 
   const handleAddLanguage = (language) => {
     const categoryMap = {
@@ -37,7 +30,7 @@ function LanguagesImporter() {
 
     const existsNow = currentTechnologies.some(t => (t.apiId && t.apiId === newTech.apiId) || t.title === newTech.title);
     if (existsNow) {
-      addToast(`Язык "${language.name}" уже в трекере.`, 'info');
+      addNotification(`Язык "${language.name}" уже в трекере.`, 'info');
       return;
     }
 
@@ -47,7 +40,7 @@ function LanguagesImporter() {
       return [...prev, newTech];
     });
 
-    addToast(`Язык "${language.name}" добавлен в трекер!`, 'success');
+    addNotification(`Язык "${language.name}" добавлен в трекер!`, 'success');
   };
 
   const handleAddMultiple = (langList) => {
@@ -72,7 +65,7 @@ function LanguagesImporter() {
     const existingApiIdsNow = new Set(currentTechnologies.map(t => t.apiId).filter(Boolean));
     const filteredNewNow = newTechs.filter(n => !(n.apiId && existingApiIdsNow.has(n.apiId)) && !currentTechnologies.some(p => p.title === n.title));
     if (filteredNewNow.length === 0) {
-      addToast('Новых языков для добавления не найдено.', 'info');
+      addNotification('Новых языков для добавления не найдено.', 'info');
       return;
     }
 
@@ -83,7 +76,7 @@ function LanguagesImporter() {
       return [...prev, ...filteredNew];
     });
 
-    addToast(`Добавлено ${filteredNewNow.length} языков в трекер!`, 'success');
+    addNotification(`Добавлено ${filteredNewNow.length} языков в трекер!`, 'success');
   };
 
   const filteredLanguages = selectedCategory === 'all' 
@@ -203,12 +196,7 @@ function LanguagesImporter() {
         </div>
       )}
       <div className="toasts">
-        {toasts.map(t => (
-          <div key={t.id} className={`toast ${t.type}`}>
-            <div className="toast-text">{t.text}</div>
-            <button onClick={() => removeToast(t.id)}>×</button>
-          </div>
-        ))}
+        {/* Notifications are handled globally via NotificationProvider */}
       </div>
     </div>
   );

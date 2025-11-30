@@ -6,20 +6,20 @@
 }
 
 .technology-item {
-    background: white;
+    background: var(--paper);
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-left: 4px solid #667eea;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+    border-left: 4px solid var(--primary);
 }
 
 .technology-item h3 {
     margin: 0 0 10px 0;
-    color: #333;
+    color: var(--text);
 }
 
 .technology-item p {
-    color: #666;
+    color: var(--muted);
     margin: 0 0 15px 0;
     line-height: 1.4;
 }
@@ -38,15 +38,15 @@
 
 .btn-delete {
     background: transparent;
-    border: 1px solid #e53e3e;
-    color: #e53e3e;
+    border: 1px solid var(--danger);
+    color: var(--danger);
     padding: 6px 10px;
     border-radius: 6px;
     font-weight: 500;
     cursor: pointer;
 }
 .btn-delete:hover {
-    background: #fff0f0;
+    background: rgba(0,0,0,0.03);
 }
 
 .status {
@@ -57,22 +57,22 @@
 }
 
 .status-completed {
-    background: #e8f5e8;
-    color: #2e7d32;
+    background: rgba(47,133,90,0.12);
+    color: var(--success);
 }
 
 .status-in-progress {
-    background: #fff3e0;
-    color: #f57c00;
+    background: rgba(245,124,0,0.12);
+    color: var(--warning);
 }
 
 .status-not-started {
-    background: #f5f5f5;
-    color: #666;
+    background: rgba(0,0,0,0.04);
+    color: var(--muted);
 }
 
 .btn-link {
-    color: #667eea;
+    color: var(--primary);
     text-decoration: none;
     font-weight: 500;
 }
@@ -84,23 +84,23 @@
 .empty-state {
     text-align: center;
     padding: 60px 20px;
-    background: white;
+    background: var(--paper);
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
 .empty-state p {
-    color: #666;
+    color: var(--muted);
     margin-bottom: 15px;
 }
 
 .tech-deadline {
     margin-top: 8px;
     font-size: 0.85em;
-    color: #6b7280;
+    color: var(--muted);
 }
 
-.tech-deadline.muted { color: #6b7280; }
-.tech-deadline.urgent { color: #b45309; font-weight: 600; }
-.tech-deadline.overdue { color: #b91c1c; font-weight: 700; }
+.tech-deadline.muted { color: var(--muted); }
+.tech-deadline.urgent { color: var(--warning); font-weight: 600; }
+.tech-deadline.overdue { color: var(--danger); font-weight: 700; }
 }

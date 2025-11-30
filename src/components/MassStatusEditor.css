@@ -1,8 +1,8 @@
 .mass-status-editor {
-  border: 1px solid #e6e6e6;
+  border: 1px solid var(--muted-border, #e6e6e6);
   padding: 12px;
   border-radius: 8px;
-  background: #fff;
+  background: var(--paper);
   margin-top: 12px;
 }
 
@@ -13,16 +13,16 @@
 .mse-status { display: flex; flex-direction: column; gap: 6px; }
 .mse-submit { margin-left: auto; }
 
-.mse-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; max-height: 220px; overflow: auto; padding: 6px; border-top: 1px dashed #eee; margin-top: 10px; }
+.mse-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; max-height: 220px; overflow: auto; padding: 6px; border-top: 1px dashed var(--muted-border, #eee); margin-top: 10px; }
 .mse-item { display: flex; align-items: center; gap: 8px; padding: 6px; border-radius: 6px; cursor: pointer; }
-.mse-item:hover { background: #fafafa; }
+.mse-item:hover { background: var(--hover, rgba(0,0,0,0.03)); }
 .mse-item input { flex: 0 0 auto; }
-.mse-item-title { font-weight: 600; color: #222; }
-.mse-item-meta { margin-left: auto; font-size: 0.85em; color: #666; }
+.mse-item-title { font-weight: 600; color: var(--text); }
+.mse-item-meta { margin-left: auto; font-size: 0.85em; color: var(--muted); }
 
 .mse-messages { margin-top: 8px; }
-.mse-error { color: #9b1c1c; background: #fff4f4; padding: 8px; border-radius: 6px; }
-.mse-success { color: #155724; background: #e6ffed; padding: 8px; border-radius: 6px; }
+.mse-error { color: var(--danger); background: var(--danger-bg, #fff4f4); padding: 8px; border-radius: 6px; }
+.mse-success { color: var(--success); background: var(--success-bg, #e6ffed); padding: 8px; border-radius: 6px; }
 
 @media (max-width: 600px) {
   .mse-controls { flex-direction: column; align-items: stretch; }

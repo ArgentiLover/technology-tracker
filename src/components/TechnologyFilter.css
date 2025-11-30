@@ -1,9 +1,9 @@
 .technology-card {
-    border: 2px solid #eee;
+    border: 2px solid var(--muted-border, #eee);
     border-radius: 10px;
     padding: 20px;
     margin: 10px 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
     transition: all 0.3s ease;
 }
 
@@ -17,32 +17,32 @@
 }
 
 .status-not-started {
-    border-left: 4px solid #ff6b6b;
-    background-color: #ffebee;
+    border-left: 4px solid var(--muted);
+    background-color: var(--paper);
 }
 
 .status-in-progress {
-    border-left: 4px solid #4ecdc4;
-    background-color: #e0f2f1;
+    border-left: 4px solid var(--warning);
+    background-color: var(--warning-bg, rgba(245,124,0,0.08));
 }
 
 .status-completed {
-    border-left: 4px solid #45b7d1;
-    background-color: #e8f5e9;
+    border-left: 4px solid var(--success);
+    background-color: var(--success-bg, rgba(47,133,90,0.08));
 }
 
 .technology-card h3 {
     margin: 0 0 10px 0;
-    color: #333;
+    color: var(--text);
 }
 
 .technology-card p {
     margin: 0 0 10px 0;
-    color: #666;
+    color: var(--muted);
 }
 
 .technology-card span {
     font-size: 0.9em;
-    color: #888;
+    color: var(--muted);
     font-weight: bold;
 }

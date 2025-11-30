@@ -1,19 +1,19 @@
 .notes-section {
     margin-top: 15px;
     padding-top: 15px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--muted-border, #eee);
 }
 
 .notes-section h4 {
     margin: 0 0 10px 0;
-    color: #555;
+    color: var(--text);
     font-size: 0.9em;
 }
 
 .notes-section textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--muted-border, #ddd);
     border-radius: 5px;
     font-family: inherit;
     font-size: 0.9em;
@@ -23,12 +23,12 @@
 
 .notes-section textarea:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: var(--primary);
 }
 
 .notes-hint {
     font-size: 0.8em;
-    color: #888;
+    color: var(--muted);
     margin-top: 5px;
     text-align: right;
 }

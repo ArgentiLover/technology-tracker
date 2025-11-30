@@ -1,14 +1,14 @@
 .deadline-form {
-  background: white;
+  background: var(--paper);
   border-radius: 10px;
   padding: 25px;
   margin-bottom: 25px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .deadline-form h2 {
   margin: 0 0 25px 0;
-  color: #2c3e50;
+  color: var(--text);
   text-align: center;
   font-size: 1.5em;
 }
@@ -18,21 +18,21 @@
 }
 
 .form-section fieldset {
-  border: 2px solid #e9ecef;
+  border: 2px solid var(--muted-border, #e9ecef);
   border-radius: 8px;
   padding: 20px;
-  background: #f8f9fa;
+  background: var(--paper-contrast, #f8f9fa);
 }
 
 .form-section legend {
   font-weight: 600;
-  color: #495057;
+  color: var(--text);
   padding: 0 10px;
   font-size: 1.1em;
 }
 
 .required {
-  color: #dc3545;
+  color: var(--danger);
 }
 
 .selection-actions {
@@ -44,9 +44,9 @@
 
 .btn-outline {
   padding: 8px 16px;
-  border: 2px solid #6c757d;
-  background: white;
-  color: #6c757d;
+  border: 2px solid var(--btn-cancel, #6c757d);
+  background: var(--paper);
+  color: var(--btn-cancel, #6c757d);
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
@@ -54,8 +54,8 @@
 }
 
 .btn-outline:hover {
-  background: #6c757d;
-  color: white;
+  background: var(--btn-cancel);
+  color: var(--paper-text, white);
 }
 
 .tech-selection-grid {
@@ -79,8 +79,8 @@
   align-items: center;
   gap: 12px;
   padding: 12px;
-  background: white;
-  border: 2px solid #e9ecef;
+  background: var(--paper);
+  border: 2px solid var(--muted-border, #e9ecef);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -88,8 +88,8 @@
 }
 
 .tech-checkbox-label:hover {
-  border-color: #667eea;
-  background: #f8f9ff;
+  border-color: var(--primary);
+  background: var(--paper-contrast, #f8f9ff);
 }
 
 .tech-checkbox-label input[type="checkbox"] {
@@ -101,7 +101,7 @@
 .checkbox-custom {
   width: 20px;
   height: 20px;
-  border: 2px solid #adb5bd;
+  border: 2px solid var(--muted-border, #adb5bd);
   border-radius: 4px;
   position: relative;
   transition: all 0.2s ease;
@@ -109,8 +109,8 @@
 }
 
 .tech-checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
-  background: #667eea;
-  border-color: #667eea;
+  background: var(--primary);
+  border-color: var(--primary);
 }
 
 .tech-checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
@@ -132,26 +132,26 @@
 
 .tech-title {
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--text);
   font-size: 0.95em;
 }
 
 .tech-status {
   font-size: 0.85em;
-  color: #6c757d;
+  color: var(--muted);
 }
 
 .form-section label {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #495057;
+  color: var(--text);
 }
 
 .form-section input[type="date"] {
   width: 100%;
   padding: 12px;
-  border: 2px solid #e9ecef;
+  border: 2px solid var(--muted-border, #e9ecef);
   border-radius: 6px;
   font-size: 16px;
   transition: border-color 0.2s ease;
@@ -159,20 +159,20 @@
 
 .form-section input[type="date"]:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--primary);
 }
 
 .form-section input[type="date"].error {
-  border-color: #dc3545;
-  background: #fff5f5;
+  border-color: var(--danger);
+  background: var(--danger-bg, #fff5f5);
 }
 
 .selection-stats {
   padding: 12px;
-  background: #e7f3ff;
-  border: 1px solid #b3d9ff;
+  background: var(--info-bg, #e7f3ff);
+  border: 1px solid var(--info-border, #b3d9ff);
   border-radius: 6px;
-  color: #0066cc;
+  color: var(--info-color, #0066cc);
   font-weight: 500;
   text-align: center;
   margin-bottom: 20px;
@@ -186,8 +186,8 @@
 
 .btn-primary {
   padding: 12px 30px;
-  background: #667eea;
-  color: white;
+  background: var(--btn-primary);
+  color: var(--paper-text, white);
   border: none;
   border-radius: 6px;
   font-size: 16px;
@@ -197,19 +197,19 @@
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #5a6fd8;
+  background: var(--btn-primary-hover);
   transform: translateY(-1px);
 }
 
 .btn-primary:disabled {
-  background: #adb5bd;
+  background: var(--muted);
   cursor: not-allowed;
   transform: none;
 }
 
 .error-message {
   display: block;
-  color: #dc3545;
+  color: var(--danger);
   font-size: 0.9em;
   margin-top: 6px;
   font-weight: 500;

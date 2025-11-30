@@ -55,7 +55,7 @@ function Statistics() {
                         <ProgressBar
                             progress={progress}
                             height={20}
-                            color="#667eea"
+                            color="var(--primary)"
                             animated={true}
                         />
                     </div>
@@ -95,7 +95,7 @@ function Statistics() {
                                 <ProgressBar
                                     progress={categoryProgress}
                                     height={12}
-                                    color="#4CAF50"
+                                    color="var(--success)"
                                     showPercentage={false}
                                 />
                                 <div className="category-details">

@@ -5,21 +5,14 @@ import './TechnologyList.css';
 import '../components/LanguagesImporter.css';
 import LanguagesImporter from '../components/LanguagesImporter';
 import TechnologyCard from '../components/TechnologyCard';
+import SimpleTechCard from '../components/SimpleTechCard';
 import DeadlineForm from '../components/DeadlineForm';
+import { useNotifications } from '../contexts/NotificationContext';
 
 function TechnologyList() {
     const { technologies, deleteTechnology, updateStatus, updateDeadline } = useTechnologies();
-    const [toasts, setToasts] = useState([]);
+    const { notifications, addNotification, removeNotification, markAsRead } = useNotifications();
     const [showDeadlineForm, setShowDeadlineForm] = useState(false);
-
-    const addToast = (text, type = 'info', timeout = 4000, actions = null) => {
-        const id = Date.now() + Math.random();
-        setToasts(t => [...t, { id, text, type, actions }]);
-        if (timeout > 0) setTimeout(() => setToasts(t => t.filter(x => x.id !== id)), timeout);
-        return id;
-    };
-
-    const removeToast = (id) => setToasts(t => t.filter(x => x.id !== id));
 
     const getStatusText = (status) => {
         switch(status) {
@@ -55,7 +48,7 @@ function TechnologyList() {
                             onUpdateDeadlines={(updates) => {
                                 // updates: [{ techId, deadline }]
                                 updates.forEach(u => updateDeadline(u.techId, u.deadline));
-                                addToast(`Дедлайны обновлены для ${updates.length} технологий`, 'success');
+                                addNotification(`Дедлайны обновлены для ${updates.length} технологий`, 'success');
                             }}
                         />
                     </div>
@@ -65,15 +58,9 @@ function TechnologyList() {
             <div className="technologies-grid">
                 {technologies.map(tech => (
                     <div key={tech.id} className="technology-item">
-                        <TechnologyCard
-                            id={tech.id}
-                            title={tech.title}
-                            description={tech.description}
-                            status={tech.status}
-                            notes={tech.notes}
-                            deadline={tech.deadline}
+                        <SimpleTechCard
+                            technology={tech}
                             onStatusChange={updateStatus}
-                            onNotesChange={() => {}}
                         />
 
                         <div className="technology-meta">
@@ -89,9 +76,9 @@ function TechnologyList() {
                                 <button
                                     className="btn-delete"
                                     onClick={() => {
-                                        const id = addToast(`Удалить "${tech.title}"?`, 'info', 0, [
-                                            { label: 'Удалить', handler: () => { deleteTechnology(tech.id); removeToast(id); addToast('Технология удалена', 'success'); } },
-                                            { label: 'Отмена', handler: () => removeToast(id) }
+                                        const id = addNotification(`Удалить "${tech.title}"?`, 'info', 0, [
+                                            { label: 'Удалить', handler: () => { deleteTechnology(tech.id); removeNotification(id); addNotification('Технология удалена', 'success'); } },
+                                            { label: 'Отмена', handler: () => removeNotification(id) }
                                         ]);
                                     }}
                                 >
@@ -113,18 +100,7 @@ function TechnologyList() {
             )}
 
         <LanguagesImporter />
-        <div className="toasts">
-            {toasts.map(t => (
-                <div key={t.id} className={`toast ${t.type}`}>
-                    <div className="toast-text">{t.text}</div>
-                    <div style={{display: 'flex', gap: 8}}>
-                        {t.actions ? t.actions.map((a, i) => (
-                            <button key={i} onClick={() => { try { a.handler(); } catch (e) { console.error(e); } }} className="toast-action">{a.label}</button>
-                        )) : <button onClick={() => removeToast(t.id)}>×</button>}
-                    </div>
-                </div>
-            ))}
-        </div>
+        {/* Global Snackbars in NotificationProvider handle rendering of notifications */}
         </div>
         
     );
