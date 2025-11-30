@@ -8,6 +8,15 @@ function LanguagesImporter() {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   const { setTechnologies, technologies: currentTechnologies } = useTechnologies();
+  const [toasts, setToasts] = useState([]);
+
+  const addToast = (text, type = 'info', timeout = 4000) => {
+    const id = Date.now() + Math.random();
+    setToasts(t => [...t, { id, text, type }]);
+    if (timeout > 0) setTimeout(() => setToasts(t => t.filter(x => x.id !== id)), timeout);
+  };
+
+  const removeToast = (id) => setToasts(t => t.filter(x => x.id !== id));
 
   const handleAddLanguage = (language) => {
     const categoryMap = {
@@ -26,16 +35,19 @@ function LanguagesImporter() {
       apiId: language.id
     };
 
+    const existsNow = currentTechnologies.some(t => (t.apiId && t.apiId === newTech.apiId) || t.title === newTech.title);
+    if (existsNow) {
+      addToast(`Язык "${language.name}" уже в трекере.`, 'info');
+      return;
+    }
+
     setTechnologies(prev => {
       const exists = prev.some(t => (t.apiId && t.apiId === newTech.apiId) || t.title === newTech.title);
-      if (exists) {
-        alert(`Язык "${language.name}" уже в трекере.`);
-        return prev;
-      }
+      if (exists) return prev;
       return [...prev, newTech];
     });
 
-    alert(`Язык "${language.name}" добавлен в трекер!`);
+    addToast(`Язык "${language.name}" добавлен в трекер!`, 'success');
   };
 
   const handleAddMultiple = (langList) => {
@@ -57,17 +69,21 @@ function LanguagesImporter() {
       };
     });
 
+    const existingApiIdsNow = new Set(currentTechnologies.map(t => t.apiId).filter(Boolean));
+    const filteredNewNow = newTechs.filter(n => !(n.apiId && existingApiIdsNow.has(n.apiId)) && !currentTechnologies.some(p => p.title === n.title));
+    if (filteredNewNow.length === 0) {
+      addToast('Новых языков для добавления не найдено.', 'info');
+      return;
+    }
+
     setTechnologies(prev => {
       const existingApiIds = new Set(prev.map(t => t.apiId).filter(Boolean));
       const filteredNew = newTechs.filter(n => !(n.apiId && existingApiIds.has(n.apiId)) && !prev.some(p => p.title === n.title));
-      if (filteredNew.length === 0) {
-        alert('Новых языков для добавления не найдено.');
-        return prev;
-      }
+      if (filteredNew.length === 0) return prev;
       return [...prev, ...filteredNew];
     });
 
-    alert(`Добавлено ${langList.length} языков в трекер!`);
+    addToast(`Добавлено ${filteredNewNow.length} языков в трекер!`, 'success');
   };
 
   const filteredLanguages = selectedCategory === 'all' 
@@ -186,6 +202,14 @@ function LanguagesImporter() {
           <p>По запросу "{searchTerm}" ничего не найдено</p>
         </div>
       )}
+      <div className="toasts">
+        {toasts.map(t => (
+          <div key={t.id} className={`toast ${t.type}`}>
+            <div className="toast-text">{t.text}</div>
+            <button onClick={() => removeToast(t.id)}>×</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
