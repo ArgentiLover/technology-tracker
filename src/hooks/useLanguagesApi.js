@@ -6,7 +6,7 @@ function useLanguagesApi() {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const API_URL = 'https://technology-tracker-lpjeogrhy-danils-projects-e42892b9.vercel.app/api/languages';
+  const API_URL = 'technology-tracker-qub80a674-danils-projects-e42892b9.vercel.app/api/languages';
 
   const fetchLanguages = useCallback(async () => {
     try {
