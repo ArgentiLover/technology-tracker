@@ -1,14 +1,14 @@
 .quick-actions {
-    background: white;
+    background: var(--paper);
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
 .quick-actions h3 {
     margin: 0 0 15px 0;
-    color: #333;
+    color: var(--text);
     text-align: center;
 }
 
@@ -56,7 +56,7 @@
 
 .action-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.16);
 }
 
 .complete-all {
@@ -64,26 +64,26 @@
     color: white;
 }
 
+.complete-all {
+    background: linear-gradient(135deg, var(--success), var(--success));
+    color: var(--paper-text, white);
+}
 .reset-all {
-    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-    color: white;
+    background: linear-gradient(135deg, var(--danger), var(--danger));
+    color: var(--paper-text, white);
 }
-
 .random-select {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
+    background: linear-gradient(135deg, var(--primary), var(--primary-variant, #764ba2));
+    color: var(--paper-text, white);
 }
-
 .export-btn {
-    background: linear-gradient(135deg, #96c93d, #00b09b);
-    color: white;
+    background: linear-gradient(135deg, var(--success), var(--success-hover, #00b09b));
+    color: var(--paper-text, white);
 }
-
 .import-btn {
-    background: linear-gradient(135deg, #ffa726, #ff9800);
-    color: white;
+    background: linear-gradient(135deg, var(--warning), var(--warning));
+    color: var(--paper-text, white);
 }
-
 .mass-editor-section {
     display: flex;
     flex-direction: column;
@@ -94,10 +94,10 @@
 .mass-editor-section > .btn-outline {
     padding: 8px 12px;
     border-radius: 8px;
-    border: 1px solid #d1d5db;
-    background: #ffffff;
+    border: 1px solid var(--muted-border, #d1d5db);
+    background: var(--paper);
     cursor: pointer;
-    color: #111827;
+    color: var(--text);
     font-weight: 600;
 }
 
@@ -109,10 +109,10 @@
 
 .mass-status-editor {
     box-shadow: 0 6px 18px rgba(16,24,40,0.06);
-    border: 1px solid #e6e6e6;
+    border: 1px solid var(--muted-border, #e6e6e6);
     padding: 12px;
     border-radius: 8px;
-    background: #fff;
+    background: var(--paper);
 }
 
 @media (max-width: 700px) {

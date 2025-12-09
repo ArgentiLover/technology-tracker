@@ -100,7 +100,6 @@ function TechnologyList() {
             )}
 
         <LanguagesImporter />
-        {/* Global Snackbars in NotificationProvider handle rendering of notifications */}
         </div>
         
     );

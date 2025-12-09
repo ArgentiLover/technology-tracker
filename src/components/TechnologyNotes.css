@@ -19,6 +19,8 @@
     font-size: 0.9em;
     resize: vertical;
     min-height: 60px;
+    background: var(--paper);
+    color: var(--text);
 }
 
 .notes-section textarea:focus {

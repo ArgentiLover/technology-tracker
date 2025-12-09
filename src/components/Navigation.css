@@ -1,7 +1,7 @@
 .main-navigation {
-    background: white;
+    background: var(--paper);
     padding: 1rem 2rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -12,7 +12,7 @@
 
 .nav-brand h2 {
     margin: 0;
-    color: #667eea;
+    color: var(--primary);
 }
 
 .nav-menu {
@@ -38,7 +38,7 @@
 
 .nav-menu a {
     text-decoration: none;
-    color: #666;
+    color: var(--muted);
     font-weight: 500;
     padding: 0.5rem 1rem;
     border-radius: 6px;
@@ -46,27 +46,27 @@
 }
 
 .nav-menu a:hover {
-    color: #667eea;
-    background: #f8f9fa;
+    color: var(--primary);
+    background: var(--paper-contrast, rgba(0,0,0,0.04));
 }
 
 .nav-menu a.active {
-    color: #667eea;
-    background: #f0f4ff;
+    color: var(--primary);
+    background: var(--paper-contrast, rgba(102,126,234,0.12));
 }
 
 /* на мобилках сворачивается */
 @media (max-width: 768px) {
     .nav-toggle {
         display: block;
-        color: #333;
+        color: var(--text);
     }
     .nav-menu {
         position: absolute;
         top: calc(100% + 8px);
         right: 1rem;
-        background: white;
-        color: #333;
+        background: var(--paper);
+        color: var(--text);
         flex-direction: column;
         gap: 0.25rem;
         padding: 6px 0;
@@ -85,7 +85,7 @@
     .nav-menu li a {
         display: block;
         padding: 0.6rem 1rem;
-        color: #333;
+        color: var(--text);
         white-space: nowrap;
     }
 }
